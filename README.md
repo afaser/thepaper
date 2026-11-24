@@ -184,10 +184,12 @@ Namespace forms:
 - overview: `<prefix>-overview-<output>`, for example
   `thepaper-overview-DP-1`
 
-Both surfaces use the `background` layer and reserve no space. The background
-surface has `exclusive_zone = 0`; the overview surface uses `-1`
-(`DontCare`), because niri only accepts that value into the overview backdrop.
-The overview surface is mapped only while the overview is open.
+Both surfaces use the `background` layer and `exclusive_zone = -1`
+(`DontCare`): they reserve no space and ignore exclusive zones of other
+surfaces, so the wallpaper stretches across the whole output even when a bar
+is present. The overview surface needs `-1` anyway: niri only accepts that
+value into the overview backdrop. It is mapped only while the overview is
+open.
 
 Verify the surfaces with:
 

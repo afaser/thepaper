@@ -195,7 +195,7 @@ impl App {
             &self.layer_shell,
             &self.qh,
         );
-        let background = factory.create(output, &self.config.background_namespace(name), 0)?;
+        let background = factory.create(output, &self.config.background_namespace(name), -1)?;
         let overview = factory.create(output, &self.config.overview_namespace(name), -1)?;
         Ok(OutputPair::new(
             output.clone(),
