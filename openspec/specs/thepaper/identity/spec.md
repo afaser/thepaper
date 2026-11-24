@@ -17,16 +17,16 @@
 
 ### Requirement: Размещение пользовательских данных
 
-Конфигурация по умолчанию ДОЛЖНА читаться из `$XDG_CONFIG_HOME/thepaper/config.toml`, а при незаданном `XDG_CONFIG_HOME` — из `~/.config/thepaper/config.toml`; явный `--config` ДОЛЖЕН иметь приоритет. Кеш транскодированного видео ДОЛЖЕН находиться в `$XDG_CACHE_HOME/thepaper/` (фолбэк `~/.cache/thepaper/`). Лок единственного инстанса ДОЛЖЕН находиться в `$XDG_RUNTIME_DIR/thepaper.lock` (фолбэк — каталог кеша). Пути и файлы с именем `video-wallpaper` НЕ ДОЛЖНЫ читаться и создаваться.
+Конфигурация по умолчанию ДОЛЖНА читаться из `$XDG_CONFIG_HOME/thepaper/config.kdl`, а при незаданном `XDG_CONFIG_HOME` — из `~/.config/thepaper/config.kdl`; явный `--config` ДОЛЖЕН иметь приоритет. Кеш транскодированного видео ДОЛЖЕН находиться в `$XDG_CACHE_HOME/thepaper/` (фолбэк `~/.cache/thepaper/`). Лок единственного инстанса ДОЛЖЕН находиться в `$XDG_RUNTIME_DIR/thepaper.lock` (фолбэк — каталог кеша). Файл `config.toml` и пути с именем `video-wallpaper` НЕ ДОЛЖНЫ читаться и создаваться. Нормативный уровень — MUST; запреты выше — MUST NOT.
 
 #### Scenario: Конфиг по умолчанию
 
 - **WHEN** приложение запущено без `--config`
-- **THEN** конфигурация читается из `$XDG_CONFIG_HOME/thepaper/config.toml`, а при незаданном `XDG_CONFIG_HOME` — из `~/.config/thepaper/config.toml`
+- **THEN** конфигурация читается из `$XDG_CONFIG_HOME/thepaper/config.kdl`, а при незаданном `XDG_CONFIG_HOME` — из `~/.config/thepaper/config.kdl`
 
 #### Scenario: Явный путь конфигурации
 
-- **WHEN** приложение запущено с `--config /path/to/config.toml`
+- **WHEN** приложение запущено с `--config /path/to/config.kdl`
 - **THEN** читается указанный файл, а путь по умолчанию не используется
 
 #### Scenario: Кеш транскодированного видео
@@ -64,5 +64,5 @@
 
 #### Scenario: Переопределение префикса
 
-- **WHEN** в конфигурации задан `app_id_prefix = "custom"`
+- **WHEN** в конфигурации задан `app_id_prefix "custom"`
 - **THEN** поверхности выхода `DP-1` имеют namespace-ы `custom-live-DP-1` и `custom-blur-DP-1`
