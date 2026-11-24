@@ -50,6 +50,35 @@ The binary is `target/release/thepaper`. The flake dev shell contains
 `libva-utils`, the Vulkan loader and headers, Mesa, Wayland, `libdrm`,
 `pkg-config`, `clang` and `libclang`. Dependencies come from crates.io only.
 
+## Installation
+
+```sh
+nix profile add github:afaser/thepaper
+```
+
+This installs the binary from the latest GitHub Release, not from the current
+`trunk`. Nix downloads the release archive and patches it for the libraries in
+`flake.lock`; Rust is not compiled. A network connection is required for the
+archive and for library paths from `cache.nixos.org`. There is no binary cache.
+
+The release archive is tied to `release.json`, so `default.version` is the
+released artifact version. `Cargo.toml` can already name the next version;
+`default` keeps the previous release until the next release is published.
+To build the current sources instead:
+
+```sh
+nix build github:afaser/thepaper#source
+```
+
+Pinning a release tag installs that release:
+
+```sh
+nix profile add github:afaser/thepaper/v0.1.0
+```
+
+The release archive is not a standalone binary: it is patched against Nix
+store libraries and is meant to be installed through this flake.
+
 ## Quick start
 
 ```sh
@@ -346,6 +375,27 @@ rm -rf ~/.cache/video-wallpaper
 In the niri config, replace `video-wallpaper` with `thepaper` in the
 `layer-rule` namespace match and in `spawn-at-startup`. The old surface
 namespaces (`-live-`/`-blur-`) are not supported.
+
+## Releases
+
+Releases are manual: run the `Release` workflow from Actions and pass the
+version without the `v` prefix. The input must equal the version in
+`Cargo.toml`. The workflow builds `.#source`, validates the binary package from
+the local archive, publishes an immutable `vX` release with
+`thepaper-x86_64-linux.tar.gz`, commits the new `release.json` pin and sends
+that commit to the branch it was started from.
+
+A published tag and its asset are never moved or overwritten. Rerunning the
+same version can only fast-forward the existing pin into the branch. If the
+branch has moved, or a published binary must change for any reason, bump
+`Cargo.toml` and release a new version.
+
+Updating `flake.lock` changes the libraries of the binary and therefore
+requires a new version. Release it from the update branch before merging:
+`checks.default` then validates the new asset against the new lock. The
+workflow needs `contents: write`; the repository must allow that token (or the
+configured actor) to push the `vX` tag and the branch. A branch protection rule
+that requires a pull request blocks the final push even with a PAT.
 
 ## Development
 
