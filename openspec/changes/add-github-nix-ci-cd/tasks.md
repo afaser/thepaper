@@ -9,19 +9,19 @@
 
 ## 2. CI
 
-- [ ] 2.1 Создать `.github/workflows/ci.yml` с триггерами `push` в `trunk` и `pull_request`, `concurrency` по ref и `permissions: contents: read`; шаги: checkout, установка Nix, проверка `flake.lock` на `"type": "path"`, `nix flake check --print-build-logs`, `nix build .#default --print-build-logs`, сверка `./result/bin/thepaper --version` с `nix eval --raw .#default.version`, `--help`; проверить зелёный прогон на тестовом pull request без секретов
+- [x] 2.1 Создать `.github/workflows/ci.yml` с триггерами `push` в `trunk` и `pull_request`, `concurrency` по ref и `permissions: contents: read`; шаги: checkout, установка Nix, проверка `flake.lock` на `"type": "path"`, `nix flake check --print-build-logs`, `nix build .#default --print-build-logs`, сверка `./result/bin/thepaper --version` с `nix eval --raw .#default.version`, `--help`; проверить зелёный прогон на тестовом pull request без секретов
 - [ ] 2.2 Проверить провал: ветка с некомпилируемым `src/` даёт красный workflow на сборке `source`, ветка с подменённым `release.json` — красный на сверке версии; оба изменения откатить
 
 ## 3. Релиз и установка
 
-- [ ] 3.1 Создать `.github/workflows/release.yml` на `workflow_dispatch` с входом версии и `permissions: contents: write`: проверка semver и равенства `Cargo.toml`, отказ при опубликованном `vX` (кроме режима доведения пина), сборка `.#source`, детерминированный архив `thepaper-x86_64-linux.tar.gz`, SRI-хеш, локальная проверка через `lib.mkReleasePackage`, запись `release.json`, пин-коммит, тег `vX`, push только тега, draft с `--verify-tag`, загрузка, публикация через `gh release edit vX --draft=false`, проверка публичного URL и `nix build .#default`, fast-forward push пина в ветку запуска
+- [x] 3.1 Создать `.github/workflows/release.yml` на `workflow_dispatch` с входом версии и `permissions: contents: write`: проверка semver и равенства `Cargo.toml`, отказ при опубликованном `vX` (кроме режима доведения пина), сборка `.#source`, детерминированный архив `thepaper-x86_64-linux.tar.gz`, SRI-хеш, локальная проверка через `lib.mkReleasePackage`, запись `release.json`, пин-коммит, тег `vX`, push только тега, draft с `--verify-tag`, загрузка, публикация через `gh release edit vX --draft=false`, проверка публичного URL и `nix build .#default`, fast-forward push пина в ветку запуска
 - [ ] 3.2 В workflow реализовать ошибки и повтор: до публикации удалять только созданные этим запуском draft и тег; после публикации ничего не удалять и не пушить при ошибке; повторный запуск опубликованной версии только fast-forward отправляет существующий пин-коммит, при ушедшей ветке падает без force; добавить `concurrency` без отмены; проверить все ветки на тестовом репозитории/ветке
-- [ ] 3.3 Запустить release-workflow с `0.1.0` на `trunk`; проверить релиз `v0.1.0`, ассет, `release.json`, тег на пин-коммите, отсутствие force-операций в логе, `nix build .#default` и `nix eval --raw .#default.version`
-- [ ] 3.4 На чистом профиле установить `github:afaser/thepaper` и `github:afaser/thepaper/v0.1.0`: в логе есть загрузка ассета и `autoPatchelf`, нет `cargo`/`rustc`, `--help` и `--version` работают
-- [ ] 3.5 Проверить негативный сценарий версии: запуск с `9.9.9` при `0.1.0` падает до сборки; проверить повторный запуск `0.1.0` после изменения `src/` — workflow отказывает без перезаписи ассета
+- [x] 3.3 Запустить release-workflow с `0.1.0` на `trunk`; проверить релиз `v0.1.0`, ассет, `release.json`, тег на пин-коммите, отсутствие force-операций в логе, `nix build .#default` и `nix eval --raw .#default.version`
+- [x] 3.4 На чистом профиле установить `github:afaser/thepaper` и `github:afaser/thepaper/v0.1.0`: в логе есть загрузка ассета и `autoPatchelf`, нет `cargo`/`rustc`, `--help` и `--version` работают
+- [x] 3.5 Проверить негативный сценарий версии: запуск с `9.9.9` при `0.1.0` падает до сборки; проверить повторный запуск `0.1.0` после изменения `src/` — workflow отказывает без перезаписи ассета
 - [ ] 3.6 Проверить режим обновления зависимостей на следующей версии: в ветке поднять `Cargo.toml` и `flake.lock`, выпустить `v0.1.1` с этой ветки, убедиться, что `checks.default` зелёный до слияния, тег и ассет не перезаписываются
-- [ ] 3.7 Обновить `README.md`: установка из `trunk` и тега без кеша, отставание `default` от `Cargo.toml`, версия артефакта, процесс релиза, обязательный bump версии при обновлении nixpkgs, предусловия прав `GITHUB_TOKEN`/защиты ветки; проверить команды и имена тегов/ассетов
+- [x] 3.7 Обновить `README.md`: установка из `trunk` и тега без кеша, отставание `default` от `Cargo.toml`, версия артефакта, процесс релиза, обязательный bump версии при обновлении nixpkgs, предусловия прав `GITHUB_TOKEN`/защиты ветки; проверить команды и имена тегов/ассетов
 
 ## 4. Интеграционная проверка
 
-- [ ] 4.1 На чистом клоне `trunk` выполнить `nix flake check`, `nix build .#default` и установку из профиля; убедиться, что версия и `--help` совпадают с релизом, а сборка не содержит `cargo`/`rustc`
+- [x] 4.1 На чистом клоне `trunk` выполнить `nix flake check`, `nix build .#default` и установку из профиля; убедиться, что версия и `--help` совпадают с релизом, а сборка не содержит `cargo`/`rustc`
