@@ -56,12 +56,12 @@ impl Config {
         self.transcode_codec.as_deref()
     }
 
-    pub fn live_namespace(&self, output: &str) -> String {
-        format!("{}-live-{}", self.app_id_prefix, output)
+    pub fn background_namespace(&self, output: &str) -> String {
+        format!("{}-{}", self.app_id_prefix, output)
     }
 
-    pub fn blur_namespace(&self, output: &str) -> String {
-        format!("{}-blur-{}", self.app_id_prefix, output)
+    pub fn overview_namespace(&self, output: &str) -> String {
+        format!("{}-overview-{}", self.app_id_prefix, output)
     }
 }
 

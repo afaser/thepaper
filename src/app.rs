@@ -169,8 +169,8 @@ impl App {
                 tracing::info!(
                     output = %name,
                     scale,
-                    live = %self.config.live_namespace(&name),
-                    blur = %self.config.blur_namespace(&name),
+                    background = %self.config.background_namespace(&name),
+                    overview = %self.config.overview_namespace(&name),
                     "output surfaces created"
                 );
                 self.outputs.insert(key, pair);
@@ -195,14 +195,14 @@ impl App {
             &self.layer_shell,
             &self.qh,
         );
-        let live = factory.create(output, &self.config.live_namespace(name), 0)?;
-        let blur = factory.create(output, &self.config.blur_namespace(name), -1)?;
+        let background = factory.create(output, &self.config.background_namespace(name), 0)?;
+        let overview = factory.create(output, &self.config.overview_namespace(name), -1)?;
         Ok(OutputPair::new(
             output.clone(),
             name.to_owned(),
             scale,
-            live,
-            blur,
+            background,
+            overview,
         ))
     }
 

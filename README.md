@@ -74,14 +74,14 @@ In the niri config, replace `video-wallpaper` with `thepaper` in the
 ```kdl
 layer-rule {
     // Put the blur surface into the overview backdrop.
-    match namespace="^thepaper-blur-"
+    match namespace="^thepaper-overview-"
     place-within-backdrop true
 }
 
 spawn-at-startup "thepaper"
 ```
 
-Surface namespaces are `<prefix>-live-<output>` and `<prefix>-blur-<output>`.
+Surface namespaces are `<prefix>-<output>` and `<prefix>-overview-<output>`.
 Both live on the `background` layer. The live surface reserves no space
 (`exclusive_zone = 0`). niri only accepts `exclusive_zone = DontCare (-1)` into
 the overview backdrop, so the blur surface uses `-1` (it still reserves zero
