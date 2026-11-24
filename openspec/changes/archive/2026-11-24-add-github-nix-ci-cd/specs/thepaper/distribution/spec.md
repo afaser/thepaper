@@ -1,3 +1,7 @@
+## Purpose
+
+Определяет упаковку `thepaper` как пакета Nix и доставку готового ELF через GitHub Releases: установку из флейк-ссылки без компиляции Rust, сборку из исходников, проверки CI и неизменяемый релиз.
+
 ## ADDED Requirements
 
 ### Requirement: Пакет Nix
