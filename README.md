@@ -208,8 +208,8 @@ decoding is never used.
 - Frames go to a latest-frame mailbox; stale frames are dropped instead of
   queued.
 - Each DMA-BUF plane is imported as an `R8`/`Rg8` Vulkan texture. The shader
-  performs YUV-to-RGB conversion using the frame's color range, matrix and
-  transfer metadata, then cover-scales to the surface.
+  performs YUV-to-RGB conversion using the frame's color range and matrix
+  metadata, then cover-scales to the surface.
 - A DMA-BUF texture cache is keyed by buffer inode and bounded to 32 entries.
   Up to three submitted frames are tracked until GPU work completes.
 - Present mode is `Fifo`; `desired_maximum_frame_latency` is 2. Surface
