@@ -73,7 +73,7 @@ nix build github:afaser/thepaper#source
 Pinning a release tag installs that release:
 
 ```sh
-nix profile add github:afaser/thepaper/v0.1.0
+nix profile add github:afaser/thepaper/v0.1.1
 ```
 
 The release archive is not a standalone binary: it is patched against Nix
