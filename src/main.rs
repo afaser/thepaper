@@ -10,6 +10,7 @@ use smithay_client_toolkit::reexports::client::{globals::registry_queue_init, Co
 mod app;
 mod codec;
 mod config;
+mod config_document;
 mod control;
 mod decoder;
 mod frame;
@@ -74,16 +75,16 @@ fn real_main() -> Result<()> {
     let config = Config::load(&config_path)?;
     tracing::info!(
         config = %config_path.display(),
-        video = %config.video_path.display(),
-        blur_radius = config.blur_radius,
-        app_id_prefix = %config.app_id_prefix,
+        video = %config.video_path().display(),
+        blur_radius = config.blur_radius(),
+        app_id_prefix = %config.app_id_prefix(),
         "starting thepaper"
     );
 
     let _lock = acquire_instance_lock()?;
     low_priority();
 
-    let plan = prepare(&config.video_path, config.transcode_codec.as_deref())?;
+    let plan = prepare(config.video_path(), config.transcode_codec())?;
     if plan.transcoded {
         tracing::info!(path = %plan.path.display(), "using cached hardware-decodable transcode");
     }

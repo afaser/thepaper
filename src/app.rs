@@ -115,7 +115,7 @@ impl App {
             .map_err(|e| anyhow!("wl_compositor is not available: {e}"))?;
         let layer_shell = LayerShell::bind(globals, qh)
             .map_err(|e| anyhow!("zwlr_layer_shell_v1 is not available: {e}"))?;
-        let renderer = Renderer::new(&device, config.blur_radius)?;
+        let renderer = Renderer::new(&device, config.blur_radius())?;
 
         Ok(Self {
             conn: conn.clone(),

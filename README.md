@@ -23,14 +23,14 @@ direnv exec . cargo build --release
 
 ## Configuration
 
-Default path: `$XDG_CONFIG_HOME/thepaper/config.toml`
-(`~/.config/thepaper/config.toml`). Pass `--config <path>` to override.
+Default path: `$XDG_CONFIG_HOME/thepaper/config.kdl`
+(`~/.config/thepaper/config.kdl`). Pass `--config <path>` to override.
 
-```toml
-video_path = "/home/user/Videos/wallpaper.mp4"
-blur_radius = 12                  # optional, 1..=64, default 12
-app_id_prefix = "thepaper"        # optional
-# transcode_codec = "hevc"        # optional override; normally auto-selected
+```kdl
+video_path "/home/user/Videos/wallpaper.mp4"
+blur_radius 12                  // optional, 1..=64, default 12
+app_id_prefix "thepaper"        // optional
+// transcode_codec "hevc"       // optional override; normally auto-selected
 ```
 
 If the source codec has no VA-API decode profile (for example AV1 on this
@@ -39,6 +39,22 @@ both hardware-decodable and encodable (HEVC + `hevc_vaapi` here), cached under
 `$XDG_CACHE_HOME/thepaper/`, and verified with a hardware decode before
 playback. Software decoding is never used; if neither hardware decode nor a
 suitable transcode is possible the process exits with a clear error.
+
+## Migration from TOML
+
+`config.toml` is no longer read. Rename the file, remove the `=` signs, and
+replace `#` comments with `//`; values stay the same.
+
+```sh
+mv ~/.config/thepaper/config.toml ~/.config/thepaper/config.kdl
+```
+
+```diff
+-video_path = "/home/user/Videos/wallpaper.mp4"
+-blur_radius = 12
++video_path "/home/user/Videos/wallpaper.mp4"
++blur_radius 12
+```
 
 ## Migration from video-wallpaper
 

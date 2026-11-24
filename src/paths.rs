@@ -6,7 +6,7 @@ pub fn default_config_path() -> PathBuf {
         .filter(|p| p.is_absolute())
         .or_else(|| std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".config")))
         .unwrap_or_else(|| PathBuf::from(".config"));
-    base.join("thepaper").join("config.toml")
+    base.join("thepaper").join("config.kdl")
 }
 
 pub fn cache_dir() -> PathBuf {

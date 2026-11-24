@@ -13,16 +13,15 @@ calloop-wayland-source = "0.4"
 clap = { version = "4.5", features = ["derive"] }
 ffmpeg-sys-next = { version = "9.1", default-features = false, features = ["avcodec", "avformat"] }
 futures-util = "0.3"
+kdl = { version = "~6.5.0", default-features = false }
 libc = "0.2"
 niri-ipc = "26.4"
 pollster = "0.4"
 raw-window-handle = "0.6"
-serde = { version = "1.0", features = ["derive"] }
 sha2 = "0.10"
 smithay-client-toolkit = { version = "0.21", default-features = false, features = ["calloop", "system"] }
 thiserror = "2.0"
 tokio = { version = "1", features = ["rt", "macros", "time", "sync"] }
-toml = "0.9"
 wayland-client = { version = "0.31", features = ["system"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
